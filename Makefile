@@ -83,6 +83,7 @@ tor: src/tor-configure-stamp src/libevent-build-stamp src/openssl-build-stamp
 		--disable-asciidoc                 \
 		--disable-zstd                     \
 		--disable-lzma                     \
+		--enable-static-tor				   \
 		--enable-static-libevent           \
 		--with-libevent-dir=$(PREFIX)      \
 		--enable-static-openssl            \
