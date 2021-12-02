@@ -2,22 +2,23 @@
 # This Makefile heavily abuses the stamp idiom :-)
 #
 
-OPENSSL_VERSION ?= 1.0.2n #1.1.1l
+OPENSSL_VERSION ?= 1.1.1l
 OPENSSL_URL = https://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
 
-LIBEVENT_VERSION ?= 2.1.8-stable #2.1.12-stable
+LIBEVENT_VERSION ?= 2.1.12-stable
 LIBEVENT_URL = https://github.com/libevent/libevent/releases/download/release-$(LIBEVENT_VERSION)/libevent-$(LIBEVENT_VERSION).tar.gz
 
 ZLIB_VERSION ?= 1.2.11
 ZLIB_URL = https://github.com/madler/zlib/archive/refs/tags/v$(ZLIB_VERSION).tar.gz
 
+TOR_VERSION ?= tor-0.4.6.8
 TOR_GIT_URL ?= https://git.torproject.org/tor.git
 
-MINGW  ?= mingw
-HOST   ?= i686-w64-mingw32
+#MINGW  ?= mingw
+#HOST   ?= i686-w64-mingw32
 
-#MINGW  ?= mingw64
-#HOST   ?= x86_64-w64-mingw32
+MINGW  ?= mingw64
+HOST   ?= x86_64-w64-mingw32
 
 CC     ?= $(HOST)-gcc
 CXX    ?= $(HOST)-g++
@@ -92,6 +93,9 @@ src/zlib-build-stamp: src/zlib-unpack-stamp
 # Tor.
 src/tor-fetch-stamp: src/zlib-build-stamp
 	git clone $(TOR_GIT_URL) src/tor
+	cd src/tor && 							\
+	git fetch  && 							\
+	git checkout $(TOR_VERSION)		
 	touch $@
 
 src/tor-configure-stamp: src/tor-fetch-stamp
